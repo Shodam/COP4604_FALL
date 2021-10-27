@@ -1,0 +1,119 @@
+USERINPUT=$1
+case $USERINPUT in
+  httpd)
+  rm /var/www/lighttpd/index.html
+  rm /usr/share/nginx/html/index.html
+  dnf install httpd -y
+  systemctl stop nginx
+  systemctl stop lighttpd
+  systemctl start httpd
+  systemctl status httpd --no-pager
+  
+  for i in {1..1000}
+  do
+  USERINFO=$(cat acane017.csv | head -$i | tail -1 | cut -d, --fields=1-12);
+  USERNAME=$(echo $USERINFO | cut -d, -f1)
+  FIRSTNAME=$(echo $USERINFO | cut -d, -f2)
+  LASTNAME=$(echo $USERINFO | cut -d, -f3)
+  GENDER=$(echo $USERINFO | cut -d, -f4)
+  BIRTHDATE=$(echo $USERINFO | cut -d, -f5)
+  LANGUAGE=$(echo $USERINFO | cut -d, -f6)
+  BLOODTYPE=$(echo $USERINFO | cut -d, -f7)
+  HOROSCOPE=$(echo $USERINFO | cut -d, -f8)
+  CONSTELLATIONS=$(echo $USERINFO | cut -d, -f9)
+  PLANET=$(echo $USERINFO | cut -d, -f10)
+  TVGENRE=$(echo $USERINFO | cut -d, -f11)
+  DINO=$(echo $USERINFO | cut -d, -f12)
+  if (( $i % 2 != 0 ))
+  then echo $i,$USERNAME,$FIRSTNAME,$LASTNAME,$GENDER,$BIRTHDATE,$LANGUAGE,$BLOODTYPE,$HOROSCOPE,$CONSTELLATIONS,$PLANET,$TVGENRE,$DINO >> /var/www/html/index.html
+  fi
+;;
+  nginx)
+  rm /var/www/html/index.html
+  rm /var/www/lighttpd/index.html
+  dnf install nginx -y
+  systemctl stop httpd
+  systemctl stop lighttpd
+  systemctl start nginx
+  systemctl status nginx --no-pager
+  for i in {1..1000}
+  do
+  USERINFO=$(cat acane017.csv | head -$i | tail -1 | cut -d, --fields=1-12);
+  USERNAME=$(echo $USERINFO | cut -d, -f1)
+  FIRSTNAME=$(echo $USERINFO | cut -d, -f2)
+  LASTNAME=$(echo $USERINFO | cut -d, -f3)
+  GENDER=$(echo $USERINFO | cut -d, -f4)
+  BIRTHDATE=$(echo $USERINFO | cut -d, -f5)
+  LANGUAGE=$(echo $USERINFO | cut -d, -f6)
+  BLOODTYPE=$(echo $USERINFO | cut -d, -f7)
+  HOROSCOPE=$(echo $USERINFO | cut -d, -f8)
+  CONSTELLATIONS=$(echo $USERINFO | cut -d, -f9)
+  PLANET=$(echo $USERINFO | cut -d, -f10)
+  TVGENRE=$(echo $USERINFO | cut -d, -f11)
+  DINO=$(echo $USERINFO | cut -d, -f12)
+  if (( $i % 2 == 0 ))
+  then echo $i,$USERNAME,$FIRSTNAME,$LASTNAME,$GENDER,$BIRTHDATE,$LANGUAGE,$BLOODTYPE,$HOROSCOPE,$CONSTELLATIONS,$PLANET,$TVGENRE,$DINO >> /usr/share/nginx/html/index.html
+  fi
+;;
+  lighttpd)
+  rm /var/www/html/index.html
+  rm /usr/share/nginx/html/index.html
+  yum -y install epel-release
+  yum -y update
+  yum -y install lighttpd
+  systemctl stop httpd
+  systemctl stop nginx
+  systemctl start lighttpd
+  systemctl status lighttpd --no-pager
+  for i in {1..1000}
+  do
+  USERINFO=$(cat acane017.csv | head -$i | tail -1 | cut -d, --fields=1-12);
+  USERNAME=$(echo $USERINFO | cut -d, -f1)
+  FIRSTNAME=$(echo $USERINFO | cut -d, -f2)
+  LASTNAME=$(echo $USERINFO | cut -d, -f3)
+  GENDER=$(echo $USERINFO | cut -d, -f4)
+  BIRTHDATE=$(echo $USERINFO | cut -d, -f5)
+  LANGUAGE=$(echo $USERINFO | cut -d, -f6)
+  BLOODTYPE=$(echo $USERINFO | cut -d, -f7)
+  HOROSCOPE=$(echo $USERINFO | cut -d, -f8)
+  CONSTELLATIONS=$(echo $USERINFO | cut -d, -f9)
+  PLANET=$(echo $USERINFO | cut -d, -f10)
+  TVGENRE=$(echo $USERINFO | cut -d, -f11)
+  DINO=$(echo $USERINFO | cut -d, -f12)
+  if (( $i % 7 == 0 ))
+  then echo $i,$USERNAME,$FIRSTNAME,$LASTNAME,$GENDER,$BIRTHDATE,$LANGUAGE,$BLOODTYPE,$HOROSCOPE,$CONSTELLATIONS,$PLANET,$TVGENRE,$DINO >> /var/www/lighttpd/index.html
+  fi
+  done
+;;
+  *) echo "INVALID SELECTION"
+;;
+esac
+
+#IGNORE THIS PART THIS HAS BEEN INCORPORATED IN EACH CASE IN THE SCRIPT ABOVE DONT COPY THIS PART AT THE BOTTOM LEAVING IT JUST FOR REFRENCE.
+#SCRIPT FOR INPUTING DATA IN THE INDEX.HTML FILE
+#SCRIPT TO INSTALL HTTPD ODD NUMBERS
+for i in {1..1000}
+do
+USERINFO=$(cat acane017.csv | head -$i | tail -1 | cut -d, --fields=1-12);
+USERNAME=$(echo $USERINFO | cut -d, -f1)
+FIRSTNAME=$(echo $USERINFO | cut -d, -f2)
+LASTNAME=$(echo $USERINFO | cut -d, -f3)
+GENDER=$(echo $USERINFO | cut -d, -f4)
+BIRTHDATE=$(echo $USERINFO | cut -d, -f5)
+LANGUAGE=$(echo $USERINFO | cut -d, -f6)
+BLOODTYPE=$(echo $USERINFO | cut -d, -f7)
+HOROSCOPE=$(echo $USERINFO | cut -d, -f8)
+CONSTELLATIONS=$(echo $USERINFO | cut -d, -f9)
+PLANET=$(echo $USERINFO | cut -d, -f10)
+TVGENRE=$(echo $USERINFO | cut -d, -f11)
+DINO=$(echo $USERINFO | cut -d, -f12)
+if (( $i % 2 != 0 ))
+then echo $i,$USERNAME,$FIRSTNAME,$LASTNAME,$GENDER,$BIRTHDATE,$LANGUAGE,$BLOODTYPE,$HOROSCOPE,$CONSTELLATIONS,$PLANET,$TVGENRE,$DINO >> /var/www/html/index.html
+fi
+if (( $i % 2 == 0 ))
+then echo $i,$USERNAME,$FIRSTNAME,$LASTNAME,$GENDER,$BIRTHDATE,$LANGUAGE,$BLOODTYPE,$HOROSCOPE,$CONSTELLATIONS,$PLANET,$TVGENRE,$DINO >> /usr/share/nginx/html/index.html
+fi
+if (( $i % 7 == 0 ))
+then echo $i,$USERNAME,$FIRSTNAME,$LASTNAME,$GENDER,$BIRTHDATE,$LANGUAGE,$BLOODTYPE,$HOROSCOPE,$CONSTELLATIONS,$PLANET,$TVGENRE,$DINO >> /var/www/lighttpd/index.html
+fi
+done
