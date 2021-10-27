@@ -1,0 +1,15 @@
+LINES=$(cat words.txt)
+for WORDS in $LINES
+do
+KEY=$(openssl enc -aes-256-cbc -md MD5 -d -P -in redacted.csv -k $WORDS | grep 'key')
+IV=$(openssl enc -aes-256-cbc -md MD5 -d -P -in redacted.csv -k $WORDS | grep 'iv')
+SALT=$(openssl enc -aes-256-cbc -md MD5 -d -P -in redacted.csv -k $WORDS | grep 'salt')
+#echo "key:" ${KEY:4} "IV:"  ${IV:4} "SALT:"  ${SALT:5} "keytemp: "
+if openssl enc -aes-256-cbc -md MD5 -d -in redacted.csv -out redacted.dat -K ${KEY:4} -iv ${IV:4} -S ${SALT:5}
+then echo $WORDS
+openssl enc -aes-256-cbc -d -md MD5  -in redacted.csv -out redacted.dat -K ${KEY:4} -iv ${IV:4} -S ${SALT:5}
+break
+else
+echo "Not Right Password"
+fi
+done
