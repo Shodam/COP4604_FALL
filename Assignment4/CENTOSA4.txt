@@ -27,6 +27,7 @@ case $USERINPUT in
   if (( $i % 2 != 0 ))
   then echo $i,$USERNAME,$FIRSTNAME,$LASTNAME,$GENDER,$BIRTHDATE,$LANGUAGE,$BLOODTYPE,$HOROSCOPE,$CONSTELLATIONS,$PLANET,$TVGENRE,$DINO >> /var/www/html/index.html
   fi
+  done
 ;;
   nginx)
   rm /var/www/html/index.html
@@ -54,6 +55,7 @@ case $USERINPUT in
   if (( $i % 2 == 0 ))
   then echo $i,$USERNAME,$FIRSTNAME,$LASTNAME,$GENDER,$BIRTHDATE,$LANGUAGE,$BLOODTYPE,$HOROSCOPE,$CONSTELLATIONS,$PLANET,$TVGENRE,$DINO >> /usr/share/nginx/html/index.html
   fi
+  done
 ;;
   lighttpd)
   rm /var/www/html/index.html
