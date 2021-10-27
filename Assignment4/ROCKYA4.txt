@@ -1,0 +1,39 @@
+USERINPUT=$1
+DAY=${USERINPUT:0:2}
+MONTH=${USERINPUT:2:2}
+YEAR=${USERINPUT:4:10}
+CURRENTDATENUMBER=$(date +%j)
+USERDATE=$(date --date="$MONTH/$DAY/$YEAR" +%d%m%Y)
+USERDATENUMBER=$(date --date="$MONTH/$DAY/$YEAR" +%j)
+USERDATEDAYNUMBER=$(date --date="$MONTH/$DAY/$YEAR" +%u)
+((DAYSLEFT = USERDATENUMBER - CURRENTDATENUMBER))
+case $USERDATEDAYNUMBER in
+1)
+echo $DAYSLEFT "days until "$USERDATE
+echo $USERDATE "lands on a Mo"
+;;
+2)
+echo $DAYSLEFT "days until "$USERDATE
+echo $USERDATE "lands on a Tu"
+;;
+3)
+echo $DAYSLEFT "days until "$USERDATE
+echo $USERDATE "lands on a We"
+;;
+4)
+echo $DAYSLEFT "days until "$USERDATE
+echo $USERDATE "lands on a Th"
+;;
+5)
+echo $DAYSLEFT "days until "$USERDATE
+echo $USERDATE "lands on a Fr"
+;;
+6)
+echo $DAYSLEFT "days until "$USERDATE
+echo $USERDATE "lands on a Sa"
+;;
+7)
+echo $DAYSLEFT "days until "$USERDATE
+echo $USERDATE "lands on a Su"
+;;
+esac
