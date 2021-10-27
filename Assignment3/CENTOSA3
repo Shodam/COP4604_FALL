@@ -1,0 +1,34 @@
+// create folders a-z in the /home directory
+for i in {a..z}; do mkdir /home/$i; done
+
+//Add a folder per user and place them on the corresponding folder as per their last name
+//the Firstchar syntax is just slicing the Lastname letter and making it into that corresponding variable per iteration
+//the LETTERS={a..z}... Idk how to explain it but its basically a loop within itself. In theory the if statement always passes
+//but thats because it has to pass thru every letter and will get a match
+for i in {1..1000}
+do
+USERINFO=$(cat YOURFIUUSERNAME.csv | head -$i | tail -1 | cut -d, --fields=1,3);
+USERNAME=$(echo $USERINFO | cut -d, -f1);
+LASTNAME=$(echo $USERINFO | cut -d, -f2);
+FIRSTCHAR=${LASTNAME::1};
+LETTERS={a..z};
+if [ '$FIRSTCHAR'=='$LETTERS' ];
+then mkdir /home/$FIRSTCHAR/$USERNAME;
+fi;
+done
+
+
+//FILES - under each users folder add the following two static files -> planets & zodiac
+for i in {1..1000}
+do
+USERINFO=$(cat YOURFIUUSERNAME.csv | head -$i | tail -1 | cut -d, --fields=1,3,8,10);
+USERNAME=$(echo $USERINFO | cut -d, -f1);
+LASTNAME=$(echo $USERINFO | cut -d, -f2);
+ZODIAC=$(echo $USERINFO | cut -d, -f3);
+PLANET=$(echo $USERINFO | cut -d, -f4);
+FIRSTCHAR=${LASTNAME::1};
+LETTERS={a..z};
+if [ '$FIRSTCHAR'=='$LETTERS' ];
+then echo $PLANET > /home/$FIRSTCHAR/$USERNAME/planets; echo $ZODIAC > /home/$FIRSTCHAR/$USERNAME/zodiac
+fi;
+done
