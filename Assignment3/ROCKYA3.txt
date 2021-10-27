@@ -1,0 +1,13 @@
+INPUTCHAR=$1
+name=($(cat /root/dictionary))
+for name in "${name[@]}"
+do
+FIRSTLETTER=${name:0:1};
+if [ "$INPUTCHAR" == "$FIRSTLETTER" ]
+then name1=`echo $name | rev`; SIZE=${#name};
+if [ "$name" == "$name1" ] && [ $SIZE != "2" ] && [ $SIZE != "1" ]
+then
+echo "$name";
+fi
+fi
+done

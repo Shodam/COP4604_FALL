@@ -1,0 +1,13 @@
+//Fibonacci Bash script for Fedorah.
+//I got this bash script from geeks4geeks, The $1 register is so you can run
+//The script like "/root/fibonacci.sh 13". If you input the example the result should match.
+a=0;
+b=1;
+N=$1
+for (( i=0; i<N; i++))
+do
+echo -n "$a ";
+fn=$((a+b));
+a=$b;
+b=$fn;
+done

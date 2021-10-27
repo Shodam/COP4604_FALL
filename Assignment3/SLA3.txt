@@ -1,0 +1,21 @@
+//Find the users that have the incorrect values in either one of the files [ tvgenre, dino ]
+//Made a bunch of variables, some within the If statements (Just so we know for sure we are only making that variable whenever that conditions passes)
+//Same concept as for CentOS except we notice that they want the first name of the users, in CentOS we did it with Last name so we have to change it up a little
+for i in {1..1000}
+do
+USERINFO=$(cat YOURFIUUSERNAME.csv | head -$i | tail -1 | cut -d, --fields=1,2,11,12);
+USERNAME=$(echo $USERINFO | cut -d, -f1);
+FIRSTNAME=$(echo $USERINFO | cut -d, -f2);
+TVGENRE=$(echo $USERINFO | cut -d, -f3);
+DINO=$(echo $USERINFO | cut -d, -f4);
+FIRSTCHAR=${FIRSTNAME::1};
+LETTERS={a..z};
+if [ '$FIRSTCHAR'=='$LETTERS' ];
+then
+LOCALTEXTTV=$(cat /home/$FIRSTCHAR/$USERNAME/tvgenre);
+LOCALTEXTDINO=$(cat /home/$FIRSTCHAR/$USERNAME/dino);
+ if [ $LOCALTEXTTV != $TVGENRE ] || [ $LOCALTEXTDINO != $DINO ];
+ then echo -e "$USERNAME" >> /root/output.txt;
+fi;
+fi;
+done
