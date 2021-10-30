@@ -1,0 +1,30 @@
+##FIREWALLSCRIPT
+PORTINIT=$((8039))
+PORTNUM=$((PORTINIT))
+for i in {1..1000}
+do
+firewall-cmd --add-port=$PORTNUM/tcp
+((PORTNUM=PORTNUM+1))
+done
+firewall-cmd --reload
+#SCRIPT
+PORTINIT=$((8039))
+PORTNUM=$((PORTINIT))
+for i in {1..1000}
+do
+USERINFO=$(cat acane017.csv | head -$i | tail -1 | cut -d, --fields=1-12);
+USERNAME=$(echo $USERINFO | cut -d, -f1)
+FIRSTNAME=$(echo $USERINFO | cut -d, -f2)
+LASTNAME=$(echo $USERINFO | cut -d, -f3)
+GENDER=$(echo $USERINFO | cut -d, -f4)
+BIRTHDATE=$(echo $USERINFO | cut -d, -f5)
+LANGUAGE=$(echo $USERINFO | cut -d, -f6)
+BLOODTYPE=$(echo $USERINFO | cut -d, -f7)
+HOROSCOPE=$(echo $USERINFO | cut -d, -f8)
+CONSTELLATIONS=$(echo $USERINFO | cut -d, -f9)
+PLANET=$(echo $USERINFO | cut -d, -f10)
+TVGENRE=$(echo $USERINFO | cut -d, -f11)
+DINO=$(echo $USERINFO | cut -d, -f12)
+echo $i $USERNAME,$FIRSTNAME,$LASTNAME,$GENDER,$BIRTHDATE,$LANGUAGE,$BLOODTYPE,$HOROSCOPE,$CONSTELLATIONS,$PLANET,$TVGENRE,$DINO | nc -l $PORTNUM
+((PORTNUM=PORTNUM+1))
+done
